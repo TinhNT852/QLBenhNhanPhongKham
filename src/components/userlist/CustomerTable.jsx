@@ -1,10 +1,13 @@
-import { CheckCircleOutlined, DeleteOutlined, EditOutlined, EllipsisOutlined, PlusOutlined, ProfileOutlined } from "@ant-design/icons";
-import { Button, Dropdown, Menu, Table } from "antd";
-import "antd/dist/reset.css";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Table, Tag, Button } from "antd";
+import { PlusOutlined, ProfileOutlined } from "@ant-design/icons";
+import "antd/dist/reset.css";
 import "./CustomerTable.css";
 import ModalForm from "./form/ModalForm";
+import { useNavigate } from "react-router-dom";
+
+
+
 
 const data = [
   {
@@ -12,18 +15,25 @@ const data = [
     name: "Bold text column",
     dob: "12/01/2025",
     gender: "Nam",
-    number: "01223334444",
+    contract: [
+    { id: 1, type: "Bold text column", date: "10/01/2025", product: "EBA ACC", status: "Hết hạn" },
+    { id: 2, type: "Bold text column", date: "10/01/2025", product: "EBA PMS", status: "Còn hạn" },
+    { id: 3, type: "Bold text column", date: "10/01/2025", product: "EBA FAB", status: "Hết hạn" },
+    { id: 4, type: "Bold text column", date: "10/01/2025", product: "EBA PTV", status: "Còn hạn" }
+    ],
+    country: "Vietnam",
     address: "Regular text column",
-    email: "truongtd@gmail.com",
+    email: "dung1@gmail.com",
   },
   {
     key: "2",
     name: "Bold text column",
-    dob: "12/01/2025",
+    dob: "12/02/2025",
     gender: "Nam",
-    number: "08765432100",
+    contract: [],
+    country: "Vietnam",
     address: "Regular text column",
-    email: "truongtd@gmail.com",
+    email: "dung1@gmail.com",
   }
 ];
 
@@ -34,12 +44,12 @@ const CustomerTable = () => {
 
   const handleActionClick = (record) => {
     console.log("Thông tin item được click:", record);
-    navigate('./detail', { state: { item: record }});
+    navigate("/data", { state: record });
   };
 
   const columns = [
     {
-      title: "Tên Bệnh Nhân",
+      title: "Tên Khách Hàng",
       dataIndex: "name",
       render: (text) => <strong>{text}</strong>,
     },
@@ -52,9 +62,25 @@ const CustomerTable = () => {
       dataIndex: "gender",
     },
     {
-      title: "Số điện thoại",
-      dataIndex: "number",
-      
+      title: "Hợp đồng",
+      dataIndex: "contract",
+      render: (contracts) =>
+        contracts.length > 0 ? (
+          contracts.map((item, index) => (
+            <div key={index}>
+              <span style={{margin: "5px"}}>{item.type}</span>
+              <Tag color={item.status === "Còn hạn" ? "green" : "red"}>{
+                item.status
+              }</Tag>
+            </div>
+          ))
+        ) : (
+          <span>-</span>
+        ),
+    },
+    {
+      title: "Quốc Tịch",
+      dataIndex: "country",
     },
     {
       title: "Địa Chỉ",
@@ -67,35 +93,21 @@ const CustomerTable = () => {
     {
       title: "Hành Động",
         render: (_, record) => (
-          <Dropdown overlay={<Menu>
-            <Menu.Item key="edit" icon={<EditOutlined />} onClick={()=> handleActionClick(record)}>
-              Chỉnh sửa
-            </Menu.Item>
-            <Menu.Item key="approved" icon={<CheckCircleOutlined />}>
-              Chi tiết
-            </Menu.Item>
-            <Menu.Item key="delete" icon={<DeleteOutlined />} danger>
-              Xóa
-            </Menu.Item>
-          </Menu>} trigger={["click"]}>
-            <Button>
-              <EllipsisOutlined style={{ cursor: "pointer" }} />
-            </Button>
-          </Dropdown>
+          <Button onClick={()=> handleActionClick(record)}>...</Button>
         ),
     },
   ];
 
   return (
     <div className="customer-table-container">
-    <div className="header-add-user-h3">
+      <div className="header-add-user-h3">
         <h4>Danh sách khách hàng</h4>
         <div className="header-add-user">
             <Button className="setting-btn" icon={<ProfileOutlined />}></Button>
             <Button type="primary" icon={<PlusOutlined />} className="add-customer-btn" onClick={() => setIsOpen(true)}>
-              Thêm Bệnh Nhân
+              Thêm khách hàng
             </Button>
-            {isOpen && <ModalForm visible={isOpen} onClose={() => setIsOpen(false)} />}
+              {isOpen && <ModalForm visible={isOpen} onClose={() => setIsOpen(false)} />}
             </div>
         </div>
         <div className="table-user-list">

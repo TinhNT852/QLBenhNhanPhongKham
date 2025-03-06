@@ -1,10 +1,10 @@
-import { Button, Col, DatePicker, Form, Input, Modal, Row, Select } from 'antd';
 import React from 'react';
+import { Button, Col, Form, Input, Row, Select, Modal, DatePicker } from 'antd';
 import './ModalForm.css';
 
 const { Option } = Select;
 
-const ModalForm = ({ visible, onClose }) => {
+const EditForm = ({ visible, onClose }) => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
@@ -12,7 +12,7 @@ const ModalForm = ({ visible, onClose }) => {
   };
 
   return (
-    <Modal title="Thêm khách hàng" open={visible} onCancel={onClose} footer={null} width={1000}>
+    <Modal title="Chỉnh sửa khách hàng" open={visible} onCancel={onClose} footer={null} width={1000}>
       <Form form={form} layout="vertical" onFinish={onFinish}>
         <h3>Thông tin chi tiết</h3>
         <div className="{styles.formContainer}">
@@ -163,4 +163,4 @@ const ModalForm = ({ visible, onClose }) => {
   );
 };
 
-export default ModalForm;
+export default EditForm;
