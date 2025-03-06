@@ -1,0 +1,36 @@
+  .full-width {
+    grid-column: span 2;
+  }
+
+  .formContainer {
+    max-width: none;
+    background: var(--antd-color-fill-alter);
+    border-radius: var(--antd-border-radius-lg);
+    padding: 24px;
+  }
+.uniform-input-height .ant-input,
+.uniform-input-height .ant-picker,
+.uniform-input-height .ant-select-selector {
+  height: auto;
+  display: flex;
+  align-items: center;
+}
+  
+  .ant-input,
+  .ant-select-selector,
+  .ant-picker {
+    border-radius: 8px;
+    height: 40px;
+  }
+  
+  .ant-input-textarea {
+    border-radius: 8px;
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
